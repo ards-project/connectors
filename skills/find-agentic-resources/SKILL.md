@@ -63,6 +63,15 @@ API) using the resource's own endpoint and protocol. Then stop and let them act.
 
 ## Installation
 
-Copy this `find-agentic-resources/` folder into your Claude Skills location
-(personal or project Skills), or upload it via **Settings → Capabilities →
-Skills** on claude.ai. See the repository README for details.
+**Claude Code (recommended)** — add this repo as a plugin marketplace and install:
+
+```
+/plugin marketplace add ardp-project/connectors
+/plugin install find-agentic-resources@ardp-connectors
+```
+
+**Manual** — copy this `find-agentic-resources/` folder into your Claude Code
+skills directory: `~/.claude/skills/` (personal) or `.claude/skills/` (project).
+
+> Custom skills are currently Claude Code–only. The claude.ai web app and Claude
+> Desktop do not yet support uploading your own skills.

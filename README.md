@@ -24,6 +24,18 @@ is installed automatically:
 5. **Installs only on request** — once you pick a result, it shows you how to add
    that resource yourself.
 
+## Quick install — Claude Code
+
+This repo is a Claude Code plugin marketplace. Install the skill with:
+
+```
+/plugin marketplace add ardp-project/connectors
+/plugin install find-agentic-resources@ardp-connectors
+```
+
+Custom skills are currently Claude Code–only (not the claude.ai web app or
+Desktop). For other platforms, see the per-platform folders below.
+
 ## Two ways to connect
 
 - **Skill** — a portable instruction bundle that drives the flow over HTTP. Works
@@ -35,7 +47,7 @@ is installed automatically:
 
 | Platform | Skill | MCP |
 | --- | --- | --- |
-| **Claude** | [`skills/claude/`](skills/claude/) | [`mcp/claude/`](mcp/claude/) |
+| **Claude** | [`skills/find-agentic-resources/`](skills/find-agentic-resources/) | [`mcp/claude/`](mcp/claude/) |
 | **ChatGPT** | [`skills/chatgpt/`](skills/chatgpt/) | [`mcp/chatgpt/`](mcp/chatgpt/) |
 | **Microsoft Copilot** | [`skills/copilot/`](skills/copilot/) | [`mcp/copilot/`](mcp/copilot/) |
 | **Gemini** | [`skills/gemini/`](skills/gemini/) | [`mcp/gemini/`](mcp/gemini/) |

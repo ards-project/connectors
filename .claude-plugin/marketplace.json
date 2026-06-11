@@ -1,0 +1,19 @@
+{
+  "name": "ardp-connectors",
+  "description": "ARDS connectors for discovering agentic resources via Agent Finder.",
+  "version": "0.1.0",
+  "owner": {
+    "name": "ardp-project"
+  },
+  "plugins": [
+    {
+      "name": "find-agentic-resources",
+      "source": {
+        "source": "github",
+        "repo": "ardp-project/connectors"
+      },
+      "description": "Find tools, skills, MCP servers, and agents for a task by searching ARDS discovery services (Agent Finder). Asks which endpoint to query, presents the ranked results, and never installs anything automatically.",
+      "version": "0.1.0"
+    }
+  ]
+}
