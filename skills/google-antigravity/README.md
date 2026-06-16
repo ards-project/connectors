@@ -1,10 +1,10 @@
 # Google Antigravity — Find agentic resources (ARD)
 
-Google Antigravity supports custom skills. To extend Antigravity's capabilities, you can install the `find-agentic-resources` skill either globally or locally for your workspace.
+Google Antigravity supports custom skills. To extend Antigravity's capabilities, you can install the `agentfinder` skill either globally or locally for your workspace.
 
 ## Installation
 
-1. Create a directory named `.agents/skills/find-agentic-resources/` at the root of your workspace. For installation as a global skill, use `~/.gemini/config/skills/find-agentic-resources/` instead. [refer documentation for more details](https://antigravity.google/docs/skills).
+1. Create a directory named `.agents/skills/agentfinder/` at the root of your workspace. For installation as a global skill, use `~/.gemini/config/skills/agentfinder/` instead. [refer documentation for more details](https://antigravity.google/docs/skills).
 
 2. Create a sub-directory called `resources` and add `agent-finders.json` (refer the example file in this repo) to it.
 
@@ -21,7 +21,7 @@ Create the `SKILL.md` file with the following content:
 
 ````yaml
 ---
-name: find-agentic-resources
+name: agentfinder
 description: >-
   Discover tools, skills, MCP servers, and agents for a task by searching ARD
   discovery services (Agent Finder). Use whenever the user wants to find a tool,

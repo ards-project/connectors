@@ -15,7 +15,7 @@ to call the Agent Finder endpoint:
 
 ## Agent name
 
-`find-agentic-resources`
+`agentfinder`
 
 ## Agent description
 

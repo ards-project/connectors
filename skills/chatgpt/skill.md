@@ -13,7 +13,7 @@ behavior; the connector or Action makes the call.
 
 ## Skill name
 
-`find-agentic-resources`
+`agentfinder`
 
 ## Skill description (used for triggering)
 

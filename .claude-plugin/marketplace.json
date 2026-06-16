@@ -7,7 +7,7 @@
   },
   "plugins": [
     {
-      "name": "find-agentic-resources",
+      "name": "agentfinder",
       "source": {
         "source": "github",
         "repo": "ards-project/connectors"

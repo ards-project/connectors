@@ -1,5 +1,5 @@
 ---
-name: find-agentic-resources
+name: agentfinder
 description: >-
   Discover tools, skills, MCP servers, and agents for a task by searching ARD
   discovery services (Agent Finder). Use whenever the user wants to find a tool,
@@ -67,10 +67,10 @@ API) using the resource's own endpoint and protocol. Then stop and let them act.
 
 ```
 /plugin marketplace add ards-project/connectors
-/plugin install find-agentic-resources@ard-connectors
+/plugin install agentfinder@ard-connectors
 ```
 
-**Manual** — copy this `find-agentic-resources/` folder into your Claude Code
+**Manual** — copy this `agentfinder/` folder into your Claude Code
 skills directory: `~/.claude/skills/` (personal) or `.claude/skills/` (project).
 
 > Custom skills are currently Claude Code–only. The claude.ai web app and Claude

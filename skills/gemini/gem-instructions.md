@@ -16,7 +16,7 @@ search — it can only carry the behavior. To actually query Agent Finder, use:
 
 ## Gem name
 
-`find-agentic-resources`
+`agentfinder`
 
 ## Gem instructions
 

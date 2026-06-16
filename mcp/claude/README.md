@@ -12,8 +12,8 @@ The Agent Finder *is* the MCP server; nothing in this repo runs a server.
 1. **Settings → Connectors → Add custom connector.**
 2. Name it `Agent Finder` and paste the **remote MCP URL**.
 3. If the server requires auth, complete the OAuth sign-in when prompted.
-4. Pair it with the **`find-agentic-resources` Skill**
-   (`../../skills/find-agentic-resources/`)
+4. Pair it with the **`agentfinder` Skill**
+   (`../../skills/agentfinder/`)
    so Claude asks which endpoint to query, presents results, and never
    auto-installs.
 

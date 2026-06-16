@@ -26,7 +26,7 @@ This repo is a Claude Code plugin marketplace:
 
 ```
 /plugin marketplace add ards-project/connectors
-/plugin install find-agentic-resources@ard-connectors
+/plugin install agentfinder@ard-connectors
 ```
 
 For ChatGPT, GitHub Copilot, Microsoft Copilot, and Gemini — both Skill and MCP

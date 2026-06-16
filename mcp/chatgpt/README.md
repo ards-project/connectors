@@ -19,7 +19,7 @@ through **Developer mode**. The Agent Finder is the MCP server.
 
 ## Behavior
 
-Pair it with the **`find-agentic-resources` Skill** (`../../skills/chatgpt/`) so
+Pair it with the **`agentfinder` Skill** (`../../skills/chatgpt/`) so
 ChatGPT asks which endpoint to query, presents the ranked list, and never
 auto-installs. The behavior is the shared
 [interaction contract](../../shared/discovery-instructions.md).
