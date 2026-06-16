@@ -6,13 +6,16 @@ description: >-
   skill, agent, MCP server, API, or capability for something they are trying to
   do. Asks which Agent Finder endpoint(s) to query, presents the ranked results,
   and never installs anything automatically.
+argument-hint: <what you want to find>
 ---
 
 # Find agentic resources (ARD)
 
-Use this skill when the user asks you to **find** tools, skills, agents, MCP
-servers, or other capabilities for a task. It searches ARD discovery services
-(such as Agent Finder) and presents matches for the user to choose from.
+Invoke this skill as `/agentfinder <query>`, where `<query>` is the task the user
+wants to find resources for. Also use it whenever the user otherwise asks you to
+**find** tools, skills, agents, MCP servers, or other capabilities for a task. It
+searches ARD discovery services (such as Agent Finder) and presents matches for
+the user to choose from.
 
 **Requirements.** Querying an endpoint needs an HTTP capability. Use whichever is
 available: an Agent Finder **MCP connector** (see `mcp/claude/` in this repo), a
