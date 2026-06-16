@@ -1,0 +1,4 @@
+# Every PR needs an approving review from one of the project leads.
+# Any single approval suffices; GitHub does not let a PR author approve their own PR,
+# so authors other than these three will need one of the others to approve.
+* @rvguha @mindpower @evalstate
