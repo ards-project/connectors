@@ -1,19 +1,20 @@
 {
-  "note": "Agent Finder discovery services this connector may search. There is NO built-in default. The entries below are PLACEHOLDERS — replace them with discovery services you trust. When you ask the connector to find tools/skills, it presents this list, asks which to query, and never auto-installs anything it returns.",
-  "agentFinders": [
+  "note": "Shared list of Agent Finders (discovery services) the connectors can search, each with a name. The agentfinder skill seeds this into ~/.agentfinder/finders.json on first use, shows it as a menu, and remembers the user's pick in `selected`. Add your own finders to the `finders` array; set `selected` to a finder's `id` to skip the menu.",
+  "selected": null,
+  "finders": [
     {
-      "id": "example-public",
-      "name": "Example public Agent Finder",
-      "description": "Placeholder — replace with a real public discovery service you trust.",
-      "search": "https://agent-finder.example.org/search",
-      "mcp": "https://agent-finder.example.org/mcp"
+      "id": "github",
+      "name": "GitHub Agent Finder",
+      "description": "GitHub's public catalog of installable MCP servers, skills, and tools.",
+      "search": "https://agentfinder.github.com/api/v1/search",
+      "mcp": "https://agentfinder.github.com/api/v1/mcp"
     },
     {
-      "id": "example-internal",
-      "name": "Example internal Agent Finder",
-      "description": "Placeholder — replace with your organization's internal discovery service.",
-      "search": "https://finder.internal.example/search",
-      "mcp": "https://finder.internal.example/mcp"
+      "id": "huggingface",
+      "name": "Hugging Face Discover",
+      "description": "Hugging Face's discovery service for agentic resources.",
+      "search": "https://huggingface-hf-discover.hf.space/search",
+      "mcp": "https://huggingface-hf-discover.hf.space/mcp"
     }
   ]
 }

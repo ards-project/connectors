@@ -4,8 +4,8 @@ description: >-
   Discover tools, skills, MCP servers, and agents for a task by searching ARD
   discovery services (Agent Finder). Use whenever the user wants to find a tool,
   skill, agent, MCP server, API, or capability for something they are trying to
-  do. Asks which Agent Finder endpoint(s) to query, presents the ranked results,
-  and never installs anything automatically.
+  do. Offers a menu of named Agent Finders, remembers the choice, presents the
+  ranked results, and never installs anything automatically.
 argument-hint: <what you want to find>
 ---
 
@@ -14,27 +14,72 @@ argument-hint: <what you want to find>
 Invoke this skill as `/agentfinder <query>`, where `<query>` is the task the user
 wants to find resources for. Also use it whenever the user otherwise asks you to
 **find** tools, skills, agents, MCP servers, or other capabilities for a task. It
-searches ARD discovery services (such as Agent Finder) and presents matches for
-the user to choose from.
+searches ARD discovery services (Agent Finders) and presents matches for the user
+to choose from.
 
-**Requirements.** Querying an endpoint needs an HTTP capability. Use whichever is
-available: an Agent Finder **MCP connector** (see `mcp/claude/` in this repo), a
-fetch/web tool, or — in Claude Code — `Bash` with `curl`. If none is available,
-tell the user and point them at the MCP connector setup.
+**Requirements.** Querying a finder needs an HTTP capability — in Claude Code,
+`Bash` with `curl`; or an Agent Finder **MCP connector** (see `mcp/claude/` in
+this repo); or a fetch/web tool. If none is available, tell the user and point
+them at the MCP connector setup.
 
 Follow this contract exactly:
 
-## 1. Ask first — never query silently
+## 1. Choose an Agent Finder (a menu the user sees only once)
 
-Do not call any endpoint yet. Ask the user **which Agent Finder endpoint(s)** to
-search. Present the options from the user's `agent-finders.json` list (from the
-connectors repository) and let them pick, confirm, or supply a different one.
-There is **no built-in default** — the shipped entries are placeholders.
+Agent Finders are listed in a shared config at `~/.agentfinder/finders.json`,
+each with a `name`. The user's choice is remembered there, so this is a one-time
+menu — not a question on every search.
 
-## 2. Query the chosen endpoint(s)
+1. **Seed it if missing.** If `~/.agentfinder/finders.json` does not exist, create
+   the directory and write this default:
+
+   ```json
+   {
+     "selected": null,
+     "finders": [
+       {
+         "id": "github",
+         "name": "GitHub Agent Finder",
+         "description": "GitHub's public catalog of installable MCP servers, skills, and tools.",
+         "search": "https://agentfinder.github.com/api/v1/search",
+         "mcp": "https://agentfinder.github.com/api/v1/mcp"
+       },
+       {
+         "id": "huggingface",
+         "name": "Hugging Face Discover",
+         "description": "Hugging Face's discovery service for agentic resources.",
+         "search": "https://huggingface-hf-discover.hf.space/search",
+         "mcp": "https://huggingface-hf-discover.hf.space/mcp"
+       }
+     ]
+   }
+   ```
+
+2. **Use the saved choice.** Read the file. If `selected` names a finder, use it
+   without prompting — say once: *"Searching **the saved finder's name** — say
+   *switch agent finder* to change."* Then go to step 2.
+
+3. **Otherwise, show the menu.** Present the finders as a numbered list (name +
+   description) and let the user pick by number or name:
+
+   ```
+   Which Agent Finder should I search?
+     1. GitHub Agent Finder — GitHub's public catalog of MCP servers, skills, and tools
+     2. Hugging Face Discover — Hugging Face's discovery service
+   (Add your own in ~/.agentfinder/finders.json.)
+   ```
+
+   Save the pick by writing its `id` to `selected` in the file, then continue.
+
+When the user says *switch agent finder* (or similar), re-show the menu and update
+`selected`. If you have **no file access** (e.g. claude.ai or Desktop over the MCP
+connector), there's nothing to choose — just search the endpoint that connector is
+configured with.
+
+## 2. Query the chosen Agent Finder
 
 ```http
-POST <endpoint>
+POST <the selected finder's "search" URL>
 Content-Type: application/json
 
 { "query": { "text": "<the user's task, in plain language>" } }
