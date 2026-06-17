@@ -14,21 +14,27 @@ returns resources matching a task.
 When the user asks you to find tools, skills, agents, MCP servers, or other
 capabilities for a task, follow these steps **in order**:
 
-## 1. Ask first — never query silently
+## 1. Pick an Agent Finder from a menu, and remember it
 
-Do not call any endpoint yet. Ask the user **which Agent Finder endpoint(s)**
-they want to search. Present the options listed in
-[`agent-finders.json`](../agent-finders.json) and let the user pick, confirm, or
-supply a different one. These are discovery services the user has chosen to
-trust — **there is no built-in default**, and the entries shipped in
-`agent-finders.json` are placeholders to be replaced.
+Agent Finders are listed — each with a `name` — in
+[`agent-finders.json`](../agent-finders.json) (and, where the client can read and
+write files, in `~/.agentfinder/finders.json`). Two ship by default: **GitHub
+Agent Finder** and **Hugging Face Discover**; the user can add their own. The first
+time, show a numbered menu (name + description) and let the user pick; **remember**
+the choice — save it to `~/.agentfinder/finders.json`'s `selected` if you have file
+access, otherwise for the rest of the session — and don't ask again. The user can
+say *switch agent finder* to change. If you reach Agent Finder through a single
+fixed MCP connector or Action, that endpoint is the finder — skip the menu.
 
-## 2. Query the chosen endpoint(s)
+(The **GitHub Copilot** skill is the exception: it defaults to GitHub's Agent
+Finder with no menu.)
 
-For each selected endpoint, send an ARD search request:
+## 2. Query the chosen finder
+
+Send an ARD search request to the selected finder's `search` URL:
 
 ```http
-POST <endpoint>
+POST <search URL>
 Content-Type: application/json
 
 { "query": { "text": "<the user's task, in plain language>" } }

@@ -40,17 +40,21 @@ servers, or other capabilities for a task. It searches ARD discovery services
 
 Follow this contract exactly:
 
-## 1. Ask first — never query silently
+## 1. Pick an Agent Finder from a menu, and remember it
 
-Do not call any endpoint yet. Ask the user **which Agent Finder endpoint(s)** to
-search. Present the options from the user's `agent-finders.json` list (from the
-connectors repository) and let them pick, confirm, or supply a different one.
-There is **no built-in default** — the shipped entries are placeholders.
+Agent Finders are listed — each with a `name` — in the shared `agent-finders.json`
+config (and, where the client can read/write files, in `~/.agentfinder/finders.json`).
+Two ship by default: **GitHub Agent Finder** and **Hugging Face Discover**. The
+first time, show a numbered menu (name + description) and let the user pick;
+**remember** the choice — save it to `~/.agentfinder/finders.json`'s `selected` if
+you have file access, otherwise for the rest of the session — and don't ask again.
+The user can say *switch agent finder* to change. If you reach Agent Finder through
+a single fixed MCP connector or Action, that endpoint is the finder — skip the menu.
 
-## 2. Query the chosen endpoint(s)
+## 2. Query the chosen finder
 
 ```http
-POST <search-endpoint>
+POST <the selected finder's search URL>
 Content-Type: application/json
 
 { "query": { "text": "<the user's task, in plain language>" } }
