@@ -1,98 +1,80 @@
 ---
 name: agentfinder
 description: >-
-  Discover installable MCP servers, tools, skills, and agents for a task by
-  searching an ARD Agent Finder. Use whenever the user wants to find or install a
-  tool, MCP server, skill, agent, or integration for something they are trying to
-  do — email, calendars, databases, payments, cloud platforms, CI/CD, messaging,
-  monitoring, file storage, and similar services.
+  Discover tools, skills, MCP servers, and agents for a task by searching ARD
+  discovery services (Agent Finder). Use whenever the user wants to find a tool,
+  skill, agent, MCP server, API, or capability for something they are trying to
+  do. Asks which Agent Finder endpoint(s) to query, presents the ranked results,
+  and never installs anything automatically.
 argument-hint: <what you want to find>
 ---
 
-# Find agentic resources (Agent Finder)
+# Find agentic resources (ARD)
 
-Use this skill when the user asks you to **find** an MCP server, tool, skill, or
-agent for a task. It searches an ARD Agent Finder (a discovery service) and
-presents matches for the user to choose from.
+Invoke this skill as `/agentfinder <query>`, where `<query>` is the task the user
+wants to find resources for. Also use it whenever the user otherwise asks you to
+**find** tools, skills, agents, MCP servers, or other capabilities for a task. It
+searches ARD discovery services (such as Agent Finder) and presents matches for
+the user to choose from.
 
-Invoke it as `/agentfinder <query>`, where `<query>` is the task to find tools
-for. Also use it whenever the user otherwise asks you to find a tool, MCP server,
-or integration for a task. Search the registry when the task needs a third-party
-service (email, calendars, payments, databases, cloud, CI/CD, monitoring,
-messaging, file storage); skip it for purely local work (writing code, editing
-files, git, shell, math).
+**Requirements.** Querying an endpoint needs an HTTP capability. Use whichever is
+available: an Agent Finder **MCP connector** (see `mcp/claude/` in this repo), a
+fetch/web tool, or — in Claude Code — `Bash` with `curl`. If none is available,
+tell the user and point them at the MCP connector setup.
 
-## 1. Use GitHub's Agent Finder (built in)
+Follow this contract exactly:
 
-This skill already knows where to search — **GitHub's Agent Finder**:
+## 1. Ask first — never query silently
 
-```
-https://agentfinder.github.com/api/v1/search
-```
+Do not call any endpoint yet. Ask the user **which Agent Finder endpoint(s)** to
+search. Present the options from the user's `agent-finders.json` list (from the
+connectors repository) and let them pick, confirm, or supply a different one.
+There is **no built-in default** — the shipped entries are placeholders.
 
-Query it directly. **Never ask the user for a URL** — the endpoint is built in,
-so `/agentfinder <task>` works with zero configuration. No authentication is
-required.
+## 2. Query the chosen endpoint(s)
 
-Use a different service **only if the user explicitly names one** (e.g. Hugging
-Face Discover, or one from their `agent-finders.json`). If they give an ARD
-service *base* URL (a version root like `https://host/api/v1`), derive the
-endpoints from it: append `/search` to search, `/mcp` for its MCP endpoint.
+```http
+POST <endpoint>
+Content-Type: application/json
 
-## 2. Query it
-
-Send the user's task as an ARD `query` object. Use whatever HTTP capability you
-have (in a terminal, `curl`):
-
-```bash
-curl -s https://agentfinder.github.com/api/v1/search \
-  -H 'Content-Type: application/json' \
-  -d '{"query":{"text":"<the user's task, in plain language>"}}'
+{ "query": { "text": "<the user's task, in plain language>" } }
 ```
 
-- The body is the ARD spec shape: a `query` object with a `text` field. Add an
-  optional `query.filter` (e.g. `{"type":["application/mcp-server+json"]}`) to
-  narrow by resource type, and `"pageSize": <n>` to cap results.
+Narrow results with a filter when useful — e.g. MCP servers only:
+
+```json
+{ "query": { "text": "<task>", "filter": { "type": ["application/mcp-server+json"] } } }
+```
 
 ## 3. Present the results
 
-The response is `{ "results": [ ... ] }`. Each result has `displayName`,
-`mediaType` (the resource type, e.g. `application/mcp-server+json`), `url`,
-`identifier`, `source`, and a relevance `score`. Show a numbered list — for each:
-**displayName**, the type, the `url`, and the `score`. State that the score is
-relevance only — not a trust or safety rating.
+Numbered list. For each result: **displayName**, **type**, a one-line
+**description**, the **publisher / identifier**, the **endpoint URL**, and the
+relevance **score**. State that the score is **relevance only** — not a trust or
+safety rating. Offer to follow any referrals to other discovery services.
 
 ## 4. Never auto-install
 
-Do not add, enable, connect, or install any returned resource yourself.
-Installation is always the user's explicit choice.
+Do **not** add, enable, connect, install, or invoke any returned resource
+yourself. Installation is always the user's explicit choice.
 
 ## 5. Install only on request
 
-Once the user picks a result, show them how to add **that** resource using its
-`url`:
-
-- `application/mcp-server+json` — add it as an MCP server (a `.vscode/mcp.json`
-  or `claude_desktop_config.json` entry, or your client's "add MCP server" flow),
-  pointed at the resource's `url`.
-- `application/ai-skill` — install the skill from its `url`.
-- otherwise — connect to it at its `url` over its own protocol.
-
-Then stop and let the user act.
+Once the user picks a result, give them the steps to install or connect **that**
+resource themselves (add it as an MCP connector, install the skill, or call its
+API) using the resource's own endpoint and protocol. Then stop and let them act.
 
 ## Installation
 
-**Claude Code** — add this repo as a plugin marketplace and install:
+**Claude Code (recommended)** — add this repo as a plugin marketplace and install:
 
 ```
 /plugin marketplace add ards-project/connectors
 /plugin install agentfinder@ard-connectors
 ```
 
-Or copy this `agentfinder/` folder into `~/.claude/skills/` (personal) or
-`.claude/skills/` (project).
+**Manual** — copy this `agentfinder/` folder into your Claude Code
+skills directory: `~/.claude/skills/` (personal) or `.claude/skills/` (project).
 
-**GitHub Copilot CLI** — copy this `agentfinder/` folder into
-`~/.copilot/skills/`.
-
-Then invoke `/agentfinder <query>`.
+> Custom skills are currently Claude Code–only. The claude.ai web app and Claude
+> Desktop do not yet support uploading your own skills.

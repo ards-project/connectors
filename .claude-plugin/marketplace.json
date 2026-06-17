@@ -12,6 +12,7 @@
         "source": "github",
         "repo": "ards-project/connectors"
       },
+      "skills": ["./skills/agentfinder/"],
       "description": "Find tools, skills, MCP servers, and agents for a task by searching ARD discovery services (Agent Finder). Asks which endpoint to query, presents the ranked results, and never installs anything automatically.",
       "version": "0.1.0"
     }
