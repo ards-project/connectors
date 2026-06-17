@@ -22,17 +22,22 @@ service (email, calendars, payments, databases, cloud, CI/CD, monitoring,
 messaging, file storage); skip it for purely local work (writing code, editing
 files, git, shell, math).
 
-## 1. Pick the endpoint
+## 1. Use GitHub's Agent Finder (built in)
 
-Default to **GitHub's Agent Finder**:
+This skill already knows where to search — **GitHub's Agent Finder**:
 
 ```
 https://agentfinder.github.com/api/v1/search
 ```
 
-If the user names a different ARD discovery service (e.g. Hugging Face Discover,
-or one from their `agent-finders.json`), use that endpoint instead. No
-authentication is required for GitHub's Agent Finder.
+Query it directly. **Never ask the user for a URL** — the endpoint is built in,
+so `/agentfinder <task>` works with zero configuration. No authentication is
+required.
+
+Use a different service **only if the user explicitly names one** (e.g. Hugging
+Face Discover, or one from their `agent-finders.json`). If they give an ARD
+service *base* URL (a version root like `https://host/api/v1`), derive the
+endpoints from it: append `/search` to search, `/mcp` for its MCP endpoint.
 
 ## 2. Query it
 
