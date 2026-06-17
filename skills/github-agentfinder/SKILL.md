@@ -1,5 +1,5 @@
 ---
-name: github-agentfinder
+name: agentfinder
 description: >-
   Find installable MCP servers, tools, and agents for a task by searching
   GitHub's Agent Finder. Use whenever the user wants to find or install a tool,
@@ -15,7 +15,7 @@ Use this skill when the user asks you to **find** an MCP server, tool, or agent
 for a task. It searches **GitHub's Agent Finder** — a registry of installable
 MCP servers and extensions — and presents matches for the user to choose from.
 
-Invoke it as `/github-agentfinder <query>`, where `<query>` is the task you want
+Invoke it as `/agentfinder <query>`, where `<query>` is the task you want
 to find tools for. Also use it whenever the user otherwise asks you to find a
 tool, MCP server, or integration for a task.
 

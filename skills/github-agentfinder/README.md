@@ -29,4 +29,8 @@ this GitHub-specific variant can be retired or pointed at the MCP endpoint.
 - **GitHub Copilot CLI:** copy this folder to `~/.copilot/skills/github-agentfinder/`.
 - **Claude Code:** copy to `~/.claude/skills/github-agentfinder/`.
 
-Then invoke `/github-agentfinder <query>` — e.g. `/github-agentfinder query a postgres database`.
+Then invoke `/agentfinder <query>` — e.g. `/agentfinder query a postgres database`.
+
+(The folder is named `github-agentfinder` to sit alongside the generic
+`agentfinder` skill, but the skill's `name` is `agentfinder`, so it invokes as
+`/agentfinder`. Install only one of the two.)
