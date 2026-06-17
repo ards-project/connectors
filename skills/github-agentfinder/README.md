@@ -4,25 +4,19 @@ A skill for finding installable MCP servers, tools, and agents via **GitHub's
 Agent Finder** (`agentfinder.github.com`). Verified working in the GitHub
 Copilot CLI and Claude Code.
 
-## Why this is separate from the generic `agentfinder` skill
+## How this differs from the generic `agentfinder` skill
 
-The generic [`agentfinder`](../agentfinder/) skill speaks the ARD spec: it asks
-which discovery service to query and sends the object-shaped body
-`{"query":{"text":"…"}}`.
+The generic [`agentfinder`](../agentfinder/) skill asks which discovery service
+to query (it has no built-in default). This skill is hardcoded to **GitHub's**
+Agent Finder at `POST https://agentfinder.github.com/api/v1/search`, so it
+searches GitHub's registry directly without asking. Both now send the same ARD
+spec object body `{"query":{"text":"…"}}` — GitHub's Agent Finder runs the v0.9
+protocol in production as of the `github/agentfinder` PR #30 deploy.
 
-This skill is tied to **GitHub's currently-deployed** Agent Finder, which:
-
-- serves search at `POST https://agentfinder.github.com/api/v1/search`,
-- accepts the **legacy string** body `{"query":"…"}` (the object shape returns
-  `400` on the deployed build),
-- does not yet expose `/api/v1/mcp`.
-
-## To do once the v0.9 protocol ships to production
-
-When the v0.9 upgrade is deployed (`github/agentfinder` PR #30: object-shape
-`/api/v1/search` + `/api/v1/mcp`), update this skill to send the spec object
-shape — at which point it converges with the generic `agentfinder` skill and
-this GitHub-specific variant can be retired or pointed at the MCP endpoint.
+GitHub's Agent Finder also exposes an MCP endpoint at
+`POST https://agentfinder.github.com/api/v1/mcp`. If you'd rather give your
+client a native `search` tool than drive it from this skill, use the connectors
+repo's MCP setup pointed at that URL instead.
 
 ## Install
 

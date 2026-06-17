@@ -26,17 +26,19 @@ code, editing files, git, shell commands, math).
 
 ## 1. Query the Agent Finder
 
-Send the user's task as a **plain-text** query to the search endpoint. Use
-whatever HTTP capability you have (in a terminal, `curl`):
+Send the user's task to the search endpoint. Use whatever HTTP capability you
+have (in a terminal, `curl`):
 
 ```bash
 curl -s https://agentfinder.github.com/api/v1/search \
   -H 'Content-Type: application/json' \
-  -d '{"query":"<the user's task, in plain language>"}'
+  -d '{"query":{"text":"<the user's task, in plain language>"}}'
 ```
 
-- The `query` value is a **string** (e.g. `{"query":"send email via gmail"}`).
-- Add `"topK": <n>` to cap the number of results.
+- The body follows the ARD spec: a `query` object with a `text` field
+  (e.g. `{"query":{"text":"send email via gmail"}}`). An optional structured
+  `query.filter` (e.g. `{"type":["application/mcp-server+json"]}`) narrows results.
+- Add `"pageSize": <n>` to cap the number of results.
 - No authentication is required.
 
 ## 2. Present the results
