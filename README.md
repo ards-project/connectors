@@ -13,8 +13,8 @@ points your chatbot at an Agent Finder endpoint you choose, over the HTTP
 
 Nothing is installed automatically. When you ask it to find tools for a task, it:
 
-1. **Asks** which Agent Finder endpoint(s) to query.
-2. **Queries** them (`POST /search`).
+1. **Picks an Agent Finder** — GitHub's Agent Finder by default, or a different one you name.
+2. **Queries** it (`POST /search`).
 3. **Presents** the ranked results (the relevance score is *not* a trust or safety rating).
 4. **Installs only on request** — once you pick a result, it shows you how to add that resource yourself.
 
