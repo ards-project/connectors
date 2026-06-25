@@ -15,6 +15,13 @@
       "description": "Hugging Face's discovery service for agentic resources.",
       "search": "https://huggingface-hf-discover.hf.space/search",
       "mcp": "https://huggingface-hf-discover.hf.space/mcp"
+    },
+    {
+      "id": "tiza",
+      "name": "Tiza",
+      "description": "Tiza is a public catalog of MCP servers, A2A agents and skills that agents can query by intent",
+      "search": "https://tiza.cc/api/ard/v1/search",
+      "mcp": "https://tiza.cc/mcp"
     }
   ]
 }
